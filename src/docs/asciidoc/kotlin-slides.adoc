@@ -1,0 +1,1272 @@
+= Kotlin
+ Serban Iordache - 29.03.2018
+:example-caption!:
+:deckjs_transition: fade
+:deckjs_theme: scoop
+:navigation:
+:menu:
+:goto:
+:source-highlighter: prettify
+:kdir: pass:normal[{sourcedir}/kotlin/de/scoopsoftware/slides]
+:jdir: pass:normal[{sourcedir}/java/de/scoopsoftware/slides/java]
+
+[canvas-image=./images/kotlin-island.jpg]
+== The Kotlin Island
+
+
+== What is Kotlin?
+
+[quote, https://kotlinlang.org/]
+"Statically typed programming language for modern multiplatform applications"
+
+
+== Target platforms
+
+[%step]
+* JVM
+** server-side (web apps, backends of mobile apps, microservices etc.)
+** client-side (Swing, JavaFX, console apps etc.)
+** scripting (ex.: build.gradle.kts)
+
+* Android
+** official language since May 2017
+
+* JavaScript
+** client-side (browser)
+** server-side (node.js)
+
+* Native
+** via LLVM (Windows, Linux, MacOS, iOS, Android, WebAssembly)
+
+
+== JVM: build process
+
+[.thumb]
+image::build-process.png[]
+
+== Hello World
+
+[source,java]
+----
+include::{kdir}/HelloWorld1.kt[tags=main,indent=0]
+----
+
+[%step]
+* top-level function
+* parameter type written after its name
+* `println` instead of `System.out.println`
+* semicolons are optional
+
+== Hello World
+
+[source,java]
+----
+include::{kdir}/HelloWorld2.kt[tags=main,indent=0]
+----
+
+[%step]
+* use `val` for immutable variables
+* control structures such as `if` and `when` are expressions
+* the compiler can infer the variable type
+* string templates
+
+== Hello World
+
+[source,java]
+----
+include::{kdir}/HelloWorld3.kt[tags=main,indent=0]
+----
+
+[%step]
+* multi-line strings
+
+
+== Hello World
+[source,java]
+----
+include::{kdir}/HelloWorld4.kt[tags=main,indent=0]
+----
+
+[%step]
+* use `var` for mutable variables
+
+== Loops
+[source,slide]
+----
+include::{kdir}/ControlStruct.kt[tags=loop1,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/ControlStruct.kt[tags=loop2,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/ControlStruct.kt[tags=loop3,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/ControlStruct.kt[tags=while,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/ControlStruct.kt[tags=do-while,indent=0]
+----
+
+
+== when
+[source,java]
+----
+include::{kdir}/ControlStruct.kt[tags=when;omitted;when-demo,indent=0]
+----
+
+
+== Functions
+[source,java]
+----
+include::{kdir}/Palindrome1.kt[tags=content,indent=0]
+----
+
+[%step]
+* `==` calls `equals()`
+* `===` compares references
+
+== Functions
+[source,java]
+----
+include::{kdir}/Palindrome2.kt[tags=content,indent=0]
+----
+
+[%step]
+* function with an expression body
+* return type inference
+
+== Functions
+[source,java]
+----
+include::{kdir}/Palindrome3.kt[tags=content,indent=0]
+----
+
+[%step]
+* extension function
+
+
+== Functions
+[source,java]
+----
+include::{kdir}/NumberWriter1.kt[tags=content,indent=0]
+----
+
+[%step]
+* positional parameters
+
+== Functions
+[source,java]
+----
+include::{kdir}/NumberWriter2.kt[tags=content,indent=0]
+----
+
+[%step]
+* default parameters
+
+== Functions
+[source,java]
+----
+include::{kdir}/NumberWriter3.kt[tags=content,indent=0]
+----
+
+[%step]
+* mixing positional and named parameters
+
+
+== Access modifiers
+
+[cols="3,3,7",options="header"]
+|===
+|Modifier | Corresponding member | Comments
+
+| *final* | Can't be overridden | Used by default for class members
+
+| *open* | Can be overridden | Should be specified explicitly
+
+| *abstract* | Must be overridden | Can be used only in abstract classes; abstract members can't have an implementation
+
+| *override* | Overrides a member in a superclass or interface| Overridden member is open by default, if not marked final
+
+|===
+
+
+== Visibility modifiers
+
+[cols="3,4,6",options="header"]
+|===
+|Modifier | Class member | Top-level declaration
+
+| *public* (default) | Visible everywhere | Visible everywhere
+
+| *internal* | Visible in a module | Visible in a module
+
+| *protected* | Visible in subclasses | -
+
+| *private* | Visible in a class | Visible in a file
+
+|===
+
+[%step]
+* module = a set of Kotlin files compiled together
+* there is no package-private visibility
+
+
+== Classes
+
+[source,java]
+.Java
+----
+include::{jdir}/Person.java[tags=header;footer,indent=0]
+----
+
+.Kotlin
+[source,java]
+----
+include::{kdir}/Person1.kt[tags=class,indent=0]
+----
+
+== Classes
+
+[source,java]
+----
+include::{kdir}/Person1.kt[tags=class;main,indent=0]
+----
+
+[%step]
+* `Person` is a value object
+* classes are `public` and `final` by default
+* you call the constructor directly, without the `new` keyword
+* `name` and `age` are _properties_
+
+
+== Properties
+
+[source,java]
+----
+include::{kdir}/Person2.kt[tags=class;main,indent=0]
+----
+
+[%step]
+* custom getter
+
+
+== Properties
+
+[source,java]
+----
+include::{kdir}/Person3.kt[tags=class;main,indent=0]
+----
+
+[%step]
+* custom setter
+* use the special identifier `field` to access the backing field
+
+
+== Data classes
+[source,,scrollablecontent]
+.Java
+----
+include::{jdir}/Person.java[tags=header;data;footer,indent=0]
+----
+
+.Kotlin
+[source,java]
+----
+include::{kdir}/Person4.kt[tags=class,indent=0]
+----
+
+== Data classes
+[source,java]
+----
+include::{kdir}/Person4.kt[tags=class;main,indent=0]
+----
+
+
+== Nested classes
+
+[cols="10,5,5",options="header"]
+|===
+|Class A declared within another class B | In Java | In Kotlin
+
+a| Nested class (doesn't store a reference to an outer class)
+a|
+[source,noborders]
+----
+class B {
+  static class A {}
+}
+----
+
+a|
+[source,noborders]
+----
+class B {
+  class A
+}
+----
+
+a| Inner class (stores a reference to an outer class)
+a|
+[source,noborders]
+----
+class B {
+  class A {}
+}
+----
+
+a|
+[source,noborders]
+----
+class B {
+  inner class A
+}
+----
+
+|===
+
+[.thumb]
+image::nested-class.png[]
+
+
+== Sealed classes
+
+[source,java]
+----
+include::{kdir}/Alert.kt[tags=content,indent=0]
+----
+
+[%step]
+* use sealed classes to represent constrained hierarchies in which an object can only be of one of the given types
+* the subclasses of a sealed class must be declared in the same file as the sealed class itself
+
+
+== Constructors
+
+[source,slide]
+----
+open class User(val nickname: String)                // primary constructor
+----
+
+[source,slide]
+----
+class TwitterUser(nickname: String) : User(nickname) // calling parent's primary constructor
+----
+
+[source,slide]
+----
+open class Button                                    // a default constructor is generated
+----
+
+[source,slide]
+----
+class RadioButton: Button()                          // calling parent's default constructor
+----
+
+[source,slide]
+----
+class MenuItem(val name: String,
+               var enabled: Boolean=true,
+               var checked: Boolean=false)           // constructor with default arguments
+----
+
+[source,slide]
+----
+class Secretive private constructor()                // private primary constructor
+----
+
+[source,slide]
+----
+include::{kdir}/Ctor1.kt[tags=rect,indent=0]
+----
+
+== Constructors
+[source,java]
+----
+include::{kdir}/Ctor2.kt[tags=rect,indent=0]
+----
+
+== Constructors
+[source,java]
+----
+include::{kdir}/Ctor3.kt[tags=rect,indent=0]
+----
+
+
+== Objects
+[source,java]
+----
+include::{kdir}/Obj1.kt[tags=content,indent=0]
+----
+
+[%step]
+* there is no `static` keyword in Kotlin
+* `Logger` is a top-level property
+
+== Objects
+[source,java]
+----
+include::{kdir}/Obj2.kt[tags=content,indent=0]
+----
+
+[%step]
+* `object` provides support for creating singletons
+* it combines a class declaration and a declaration of a single instance of that class
+
+== Objects
+[source,java]
+----
+include::{kdir}/Obj3.kt[tags=content,indent=0]
+----
+
+[%step]
+* `object` can appear inside classes
+* `object` declarations can inherit from classes and interfaces
+
+== Companion objects
+[source,java]
+----
+include::{kdir}/CompObj1.kt[tags=content,indent=0]
+----
+
+[%step]
+* `fromPolar` should belong to `Point`
+
+== Companion objects
+[source,java]
+----
+include::{kdir}/CompObj2.kt[tags=content,indent=0]
+----
+
+[%step]
+* how can we get rid of the object name (`Factory`)?
+
+== Companion objects
+[source,java]
+----
+include::{kdir}/CompObj3.kt[tags=content,indent=0]
+----
+
+[%step]
+* only one `companion` object per class
+
+== Exceptions
+[%step]
+* Kotlin doesn't differentiate between checked and unchecked exceptions
+* you don't specify the exceptions thrown by a function
+* you can use throw as an expression
+
+[source,java slide]
+----
+include::{kdir}/Exc1.kt[tags=content,indent=0]
+----
+
+== Exceptions
+* you can use try as an expression
+
+[source,java]
+----
+include::{kdir}/Exc2.kt[tags=content,indent=0]
+----
+
+== Exceptions
+* you can use try as an expression
+
+[source,java]
+----
+include::{kdir}/Exc3.kt[tags=content,indent=0]
+----
+
+
+== Nullability
+[source,slide]
+----
+include::{kdir}/Null1.kt[tags=strLen;main-start;strLen1;main-end,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/Null1.kt[tags=strLenErr,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/Null1.kt[tags=strLenSafe;main-start;strLenSafe1;main-end,indent=0]
+----
+
+
+== Nullability - safe call operator
+[source,java]
+----
+include::{kdir}/Null2.kt[tags=content,indent=0]
+----
+
+== Nullability - not-null assertion
+[source,java]
+----
+include::{kdir}/Null3.kt[tags=content,indent=0]
+----
+
+== Nullability - extensions for nullable types
+[source,java]
+----
+include::{kdir}/Null4.kt[tags=content,indent=0]
+----
+
+
+== Nullability - safe cast operator
+[source,java]
+----
+include::{kdir}/Null5.kt[tags=content,indent=0]
+----
+
+== Platform types
+[source,slide]
+----
+include::{jdir}/User.java[tags=content,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/Platform1.kt[tags=content,indent=0]
+----
+
+
+== Platform types
+[source,diffuse]
+----
+include::{jdir}/User.java[tags=content,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Platform2.kt[tags=content,indent=0]
+----
+
+
+
+== Primitive and other basic types
+
+[%step]
+* Kotlin doesn't distinguish between primitive types and wrapper types
+
+[source,slide]
+----
+val i: Int = 1
+val list: List<Int> = listOf(1, 2, 3)
+----
+
+[%step]
+* at runtime, the number types are represented in the most efficient way possible
+
+[%step]
+* Kotlin types that correspond to Java primitive types:
+** Integer types: `Byte`, `Short`, `Int`, `Long`
+** Floating-point number types: `Float`, `Double`
+** Character type: `Char`
+** Boolean type: `Boolean`
+
+== Primitive and other basic types
+
+[cols="2,2,6,10",options="header"]
+|===
+|Kotlin | Java | Comments | Code
+
+| *Any* | Object | the supertype of all non-nullable types in Kotlin
+a|
+[source,noborders]
+----
+val answer: Any = 42
+----
+
+| *Unit* | Void | can be also used as a type argument
+a|
+[source,noborders]
+----
+interface Processor<T> { fun process(): T }
+class NoResultProcessor : Processor<Unit> {
+    override fun process() { /* do stuff */ }
+}
+----
+
+| *Nothing* | -
+| used as return type for functions that never complete successfully
+a|
+[source,noborders]
+----
+fun fail(message: String): Nothing {
+    throw Exception(message)
+}
+...
+val addr = user.address ?: fail("No address")
+println(addr.city)
+----
+|===
+
+
+
+== Class delegation
+[source,java]
+----
+include::{kdir}/Query1.kt[tags=content,indent=0]
+----
+
+== Class delegation
+[source,java]
+----
+include::{kdir}/Query2.kt[tags=content,indent=0]
+----
+
+== Property delegation
+[source,java]
+----
+include::{kdir}/Exposed.kt[tags=content,indent=0]
+----
+
+* using the https://github.com/jetbrains/exposed[Exposed framework]
+
+
+== Lazy initialization
+[source,java]
+----
+include::{kdir}/Lazy1.kt[tags=content,indent=0]
+----
+
+== Lazy initialization
+[source,java]
+----
+include::{kdir}/Lazy2.kt[tags=content,indent=0]
+----
+
+== Lazy initialization
+[source,java]
+----
+include::{kdir}/Lazy3.kt[tags=content,indent=0]
+----
+
+== Collections
+
+* Kotlin builds on the Java collections library
+* new features are added through extension functions
+
+[source,slide]
+----
+include::{kdir}/Collection1.kt[tags=read-numbers,indent=0]
+----
+
+[source,slide]
+----
+include::{kdir}/Collection1.kt[tags=add-valid-numbers,indent=0]
+----
+
+
+== Collections
+
+[cols="2,10",options=""]
+|===
+
+a|
+image::list-1-1.png[]
+
+a|
+[source,java noborders]
+----
+List<Int>
+----
+
+&nbsp; +
+(List of ``Int``s)
+
+a|
+image::list-1-0.png[]
+
+a|
+[source,java noborders]
+----
+List<Int?>
+----
+
+&nbsp; +
+(List of nullable ``Int``s)
+
+a|
+image::list-0-1.png[]
+
+a|
+[source,java noborders]
+----
+List<Int>?
+----
+
+&nbsp; +
+(Nullable list of ``Int``s)
+
+a|
+image::list-0-0.png[]
+
+a|
+[source,java noborders]
+----
+List<Int?>?
+----
+
+&nbsp; +
+(Nullable list of nullable ``Int``s)
+
+|===
+
+== Collections
+
+* Kotlin separates interfaces for accessing the data in a collection and for modifying the data
+* every Java collection interface has a read-only and a mutable representation in Kotlin
+
+[.thumb]
+image::collections.png[]
+
+
+== Collections
+
+Collection-creation functions
+[cols="4,3,8",options="header"]
+|===
+|Collection type | Read-only| Mutable
+
+| *List* | listOf | mutableListOf, arrayListOf
+| *Set* | setOf | mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf
+| *Map* | mapOf | mutableMapOf, hashMapOf, linkedMapOf, sortedMapOf
+
+|===
+
+&nbsp; +
+
+[source,slide]
+----
+include::{kdir}/Collection1.kt[tags=examples,indent=0]
+----
+
+
+== Arrays
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex1,indent=0]
+----
+
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex2,indent=0]
+----
+
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex3,indent=0]
+----
+
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex4,indent=0]
+----
+
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex5,indent=0]
+----
+
+[source,java slide]
+----
+include::{kdir}/Arrays1.kt[tags=ex6,indent=0]
+----
+
+
+== vararg & spread
+[source,java]
+----
+include::{kdir}/ControlStruct.kt[tags=vararg;omitted;vararg-demo,indent=0]
+----
+
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix1.kt[tags=content,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix2.kt[tags=content,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1;set2,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1;set2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=for1,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1;set2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=for1;for2,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1;set2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=for1;for2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=map1,indent=0]
+----
+
+== Infix calls
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=set0;set1;set2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=for1;for2,indent=0]
+----
+
+[source,java]
+----
+include::{kdir}/Infix3.kt[tags=map1;map2,indent=0]
+----
+
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct1.kt[tags=content,indent=0]
+----
+
+&nbsp;
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct2.kt[tags=content,indent=0]
+----
+
+Data classes can be destructured directly.
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct3.kt[tags=content,indent=0]
+----
+
+Non-data classes must implement `componentN()`.
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct4.kt[tags=map;mainstart;map1;mainend,indent=0]
+----
+
+.Output
+----
+include::{kdir}/Destruct4.kt[tags=mapout,indent=0]
+----
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct4.kt[tags=list;mainstart;list1;mainend,indent=0]
+----
+
+.Output
+----
+include::{kdir}/Destruct4.kt[tags=listout,indent=0]
+----
+
+== Destructuring
+[source,java]
+----
+include::{kdir}/Destruct4.kt[tags=split;mainstart;split1;mainend,indent=0]
+----
+
+.Output
+----
+include::{kdir}/Destruct4.kt[tags=splitout,indent=0]
+----
+
+== Variance, type projection
+&nbsp;
+
+[.thumb]
+image::variance1.png[]
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance1.kt[tags=content,indent=0]
+----
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance2.kt[tags=content,indent=0]
+----
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance3.kt[tags=content,indent=0]
+----
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance4.kt[tags=content,indent=0]
+----
+
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance5.kt[tags=content,indent=0]
+----
+
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance6.kt[tags=content,indent=0]
+----
+
+== Variance, type projection
+[source,java]
+----
+include::{kdir}/Variance7.kt[tags=content,indent=0]
+----
+
+
+== Variance, type projection
+
+[.thumb]
+image::variance2.png[]
+
+
+[cols="30,39,28,119",options="header"]
+|===
+| Type | Example | Variance | Restriction
+
+| Out-Projected | Producer<out Cat> | Covariance | Type parameter cannot be used as a function argument or setter
+
+| In-Projected | Consumer<in Cat> | Contravariance | If the type parameter is returned from a function or getter, its type will be Any? (or the upper-bound if you specified a type parameter constraint)
+
+| Star&#8209;Projected | MutableList<*> | Every instance is a subtype | Both of the above restrictions apply
+
+|===
+
+== Lambdas
+[.thumb]
+image::lambdas.png[]
+
+&nbsp;
+
+[source,java]
+----
+val sum = { x: Int, y: Int -> x + y }
+println(sum(1, 2))  // 3
+----
+* you can store a lambda expression in a variable
+
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas1.kt[tags=person;start;example1;end,indent=0]
+----
+
+* positional argument: `separator`
+* named argument: `transform`
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas1.kt[tags=person;start;example2;end,indent=0]
+----
+
+* the lambda expression can be moved out of the parentheses
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas1.kt[tags=person;start;example3;end,indent=0]
+----
+
+* the compiler can infer the parameter type
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas1.kt[tags=person;start;example4;end,indent=0]
+----
+
+* you can use the default parameter name `it`
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas1.kt[tags=person;start;example5;end,indent=0]
+----
+
+* you can replace the lambda expression with a member reference
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas2.kt[tags=content,indent=0]
+----
+
+* you aren't restricted to accessing final variables
+* you can modify variables from within a lambda
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas3.kt[tags=start;end,indent=0]
+----
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas3.kt[tags=start;map;end,indent=0]
+----
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas4.kt[tags=content,indent=0]
+----
+
+[%step]
+* how to avoid repeating the result name in each call?
+
+== Lambdas
+[source,java]
+----
+include::{kdir}/Lambdas5.kt[tags=content,indent=0]
+----
+
+[%step]
+* `with` is a standard library function that uses _lambdas with receivers_ (see also: `let`, `run`, `also`, `apply`)
+
+== Operators and conventions
+
+[%step]
+* Java: language features tied to specific classes (Iterable, AutoCloseable etc.)
+* Kotlin: features are tied to functions with specific names (conventions)
+
+[%step]
+[caption=]
+.Overloadable arithmetic operators
+[cols="10a,1a,10a",grid=none,options="header"]
+|===
+| Binary Operators |  &nbsp; | Unary operators
+
+|
+[cols="10,10,options="header"]
+!===
+! Expression ! Function name
+
+! a * b ! times
+! a / b ! div
+! a % b ! mod
+! a + b ! plus
+! a - b ! minus
+
+!===
+
+|
+
+|
+[cols="10,10,options="header"]
+!===
+! Expression ! Function name
+
+! +a       ! unaryPlus
+! -a       ! unaryMinus
+! \!a      ! not
+! &plus;+a, a++ ! inc
+! --a, a-- ! dec
+
+!===
+
+|===
+
+
+== Operators and conventions: arithmetic operators
+
+[source,java]
+----
+include::{kdir}/Operator1.kt[tags=content,indent=0]
+----
+
+
+== Operators and conventions: arithmetic operators
+[source,java]
+----
+include::{kdir}/Operator2.kt[tags=content,indent=0]
+----
+
+== Operators and conventions: comparisons
+[source,java]
+----
+include::{kdir}/Operator3.kt[tags=content,indent=0]
+----
+
+== Operators and conventions: indexed access
+[source,java]
+----
+include::{kdir}/Operator4.kt[tags=content,indent=0]
+----
+
+== Operators and conventions: indexed access
+[source,java]
+----
+include::{kdir}/Operator5.kt[tags=content,indent=0]
+----
+
+== Operators and conventions: the `in` operator
+[source,java]
+----
+include::{kdir}/Operator6.kt[tags=content,indent=0]
+----
+
+[%step]
+* other convention functions: `rangeTo` and `iterator`
+
+== Coroutines
+
+[source,java]
+----
+suspend fun requestImageUrls(query: String, count: Int = 20) = ...
+suspend fun requestImageData(imageUrl: String) = ...
+
+suspend fun createCollage(query: String, count: Int): BufferedImage {
+    val urls = requestImageUrls(query, count)
+    val images = mutableListOf<BufferedImage>()
+    for (index in 0 until urls.size) {
+        val image = requestImageData(urls[index])
+        images += image
+    }
+    val newImage = combineImages(images)
+    return newImage
+}
+----
+
+[small]#Source: https://github.com/rpreissel/kotlin-coroutine.git#
+
+== Coroutines
+
+[source,java]
+----
+suspend fun requestImageData(imageUrl: String) = suspendCoroutine<BufferedImage> { cont ->
+    JerseyClient.url(imageUrl)
+        .request(MediaType.APPLICATION_OCTET_STREAM)
+        .async()
+        .get(object : InvocationCallback<InputStream> {
+            override fun completed(response: InputStream) {
+                val image = ImageIO.read(response)
+                cont.resume(image)
+            }
+
+            override fun failed(throwable: Throwable) {
+                cont.resumeWithException(throwable)
+            }
+        })
+}
+----
+
+[small]#Source: https://github.com/rpreissel/kotlin-coroutine.git#
+
+
+== Other things
+
+* inline functions
+* import aliases / typealias
+* annotations:
+** annotation targets: property, field, get, set, receiver, param, setparam, delegate, file
+** @Volatile, @Strictfp, @JvmName, @JvmStatic, @JvmOverloads, @JvmField
+* lateinit
+* tail recursion
+* reified type parameters
+* dokka / kdoc
+* converting Java code
+* using Java from Kotlin
+* using Kotlin from Java
+* test frameworks
+
+== build.gradle.kts for generating these slides
+
+.&nbsp;./gradlew asciidoctor
+[source,scrollablecontent]
+----
+include::{prjdir}/build.gradle.kts[]
+----
+
+
+== Resources
+[cols="5a,10a",grid=none,options=""]
+|===
+
+|
+[.thumb]
+image::KotlinInAction.png[]
+
+|
+* Kotlin in Action
+* https://kotlinlang.org/
+* https://try.kotlinlang.org
+* https://kotlinconf.com/2017/talks/
+* https://github.com/KotlinBy/awesome-kotlin
+
+|===
