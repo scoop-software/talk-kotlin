@@ -1,0 +1,3090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.8" name="generator">
+<meta content="Serban Iordache - 29.03.2018" name="author">
+<title>Kotlin</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/scoop.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Kotlin</h1>
+<span id="author">Serban Iordache - 29.03.2018</span>
+<br>
+<span id="revnumber">version 1.0.0</span>
+</section>
+<section class="slide canvas-image" id="_the_kotlin_island" style="background-image: url(./images/kotlin-island.jpg)">
+
+</section>
+<section class="slide" id="_what_is_kotlin">
+<h2>What is Kotlin?</h2>
+<div class="quoteblock">
+<blockquote>
+"Statically typed programming language for modern multiplatform applications"
+<div class="attribution">
+<cite>https://kotlinlang.org/</cite>
+</div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_target_platforms">
+<h2>Target platforms</h2>
+<div class="ulist">
+<ul>
+<li class="slide"><p>
+JVM<div class="ulist">
+<ul>
+<li>server-side (web apps, backends of mobile apps, microservices etc.)</li>
+<li>client-side (Swing, JavaFX, console apps etc.)</li>
+<li>scripting (ex.: build.gradle.kts)</li>
+</ul>
+</div></p></li>
+<li class="slide"><p>
+Android<div class="ulist">
+<ul>
+<li>official language since May 2017</li>
+</ul>
+</div></p></li>
+<li class="slide"><p>
+JavaScript<div class="ulist">
+<ul>
+<li>client-side (browser)</li>
+<li>server-side (node.js)</li>
+</ul>
+</div></p></li>
+<li class="slide"><p>
+Native<div class="ulist">
+<ul>
+<li>via LLVM (Windows, Linux, MacOS, iOS, Android, WebAssembly)</li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_jvm_build_process">
+<h2>JVM: build process</h2>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="build process" src="./images/build-process.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_hello_world">
+<h2>Hello World</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun main(args: Array&lt;String&gt;) {
+
+    println("Hello, world!")
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">top-level function</li>
+<li class="slide">parameter type written after its name</li>
+<li class="slide"><code>println</code> instead of <code>System.out.println</code></li>
+<li class="slide">semicolons are optional</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hello_world_2">
+<h2>Hello World</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun main(args: Array&lt;String&gt;) {
+    val name = if(args.size &gt; 0) args[0] else "world"
+    println("Hello, $name!")
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">use <code>val</code> for immutable variables</li>
+<li class="slide">control structures such as <code>if</code> and <code>when</code> are expressions</li>
+<li class="slide">the compiler can infer the variable type</li>
+<li class="slide">string templates</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hello_world_3">
+<h2>Hello World</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun main(args: Array&lt;String&gt;) {
+    val name = if(args.size &gt; 0) args[0] else "world"
+    val sender = if(args.size &gt; 1) args[1] else "not important"
+    println("""Hello, $name,
+        |My name is $sender.
+        |I need your help.
+    """.trimMargin())
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">multi-line strings</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hello_world_4">
+<h2>Hello World</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun main(args: Array&lt;String&gt;) {
+    val name = if(args.size &gt; 0) args[0] else "world"
+    var sender = "not important"
+    if(args.size &gt; 1) sender = args[1]
+    println("""Hello, $name,
+        |My name is $sender.
+        |I need your help.
+    """.trimMargin())
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">use <code>var</code> for mutable variables</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_loops">
+<h2>Loops</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>for(i in 1 .. 10) { // 1 2 3 4 5 6 7 8 9 10
+    print(" $i")
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>for(i in 1 until 10) { // 1 2 3 4 5 6 7 8 9
+    print(" $i")
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>for(i in 10 downTo 1 step 2) { // 10 8 6 4 2
+    print(" $i")
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>var j = 0
+while(j++ &lt; 5) print(" $j") // 1 2 3 4 5</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>var k = 0
+do print(" $k") while(k++ &lt; 5) // 0 1 2 3 4 5</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_when">
+<h2>when</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun display(input: Any) {
+    when(input) {
+        10 -&gt; println("ten")
+        11, 12 -&gt; println("eleven or twelve")
+        in 1 .. 9 -&gt; println("a single-digit number")
+        is String -&gt; println("a string with length ${input.length}")
+        else -&gt; println("something else")
+    }
+}
+...
+...
+...
+    display(10)                  // ten
+    display(12)                  // eleven or twelve
+    display(5)                   // a single-digit number
+    display("Hello")             // a string with length 5
+    display(42)                  // something else
+    display(RuntimeException())  // something else</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_functions">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun isPalindrome(s: String): Boolean {
+    return s == s.reversed()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    println(isPalindrome("dehydrated"))   // false
+    println(isPalindrome("detartrated"))  // true
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>==</code> calls <code>equals()</code></li>
+<li class="slide"><code>===</code> compares references</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functions_2">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun isPalindrome(s: String) = s == s.reversed()
+
+
+
+fun main(args: Array&lt;String&gt;) {
+    println(isPalindrome("dehydrated"))   // false
+    println(isPalindrome("detartrated"))  // true
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">function with an expression body</li>
+<li class="slide">return type inference</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functions_3">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun String.isPalindrome() = this == this.reversed()
+
+
+
+fun main(args: Array&lt;String&gt;) {
+    println("dehydrated".isPalindrome()) // false
+    println("detartrated".isPalindrome())  // true
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">extension function</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functions_4">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import java.util.*
+import kotlin.math.PI
+
+fun write(value: Double, decimals: Int,
+          prefix: String, suffix: String, locale: Locale) {
+    println("${prefix}%.${decimals}f${suffix}".format(locale, value))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    write(PI, 5, "length = ",
+            " cm.", Locale.GERMANY)           // length = 3,14159 cm.
+    write(PI, 4, "", " cm.", Locale.US)       // 3.1416 cm.
+    write(PI, 2, "", "", Locale.GERMANY)      // 3,14
+    write(PI, 2, "", "", Locale.US)           // 3.14
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">positional parameters</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functions_5">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import java.util.*
+import kotlin.math.PI
+
+fun write(value: Double, decimals: Int = 2,
+          prefix: String = "", suffix: String = "", locale: Locale = Locale.US) {
+    println("${prefix}%.${decimals}f${suffix}".format(locale, value))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    write(PI, 5, "length = ",
+            " cm.", Locale.GERMANY)           // length = 3,14159 cm.
+    write(PI, 4, "", " cm.")                  // 3.1416 cm.
+    write(PI, 2, "", "", Locale.GERMANY)      // 3,14
+    write(PI)                                 // 3.14
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">default parameters</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functions_6">
+<h2>Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import java.util.*
+import kotlin.math.PI
+
+fun write(value: Double, decimals: Int = 2,
+          prefix: String = "", suffix: String = "", locale: Locale = Locale.US) {
+    println("${prefix}%.${decimals}f${suffix}".format(locale, value))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    write(PI, locale = Locale.GERMANY, prefix = "length = ",
+            suffix = " cm.", decimals = 5)   // length = 3,14159 cm.
+    write(PI, decimals = 4, suffix = " cm.") // 3.1416 cm.
+    write(PI, locale = Locale.GERMANY)       // 3,14
+    write(PI)                                // 3.14
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">mixing positional and named parameters</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_access_modifiers">
+<h2>Access modifiers</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:23.0769%">
+<col style="width:23.0769%">
+<col style="width:53.8462%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Modifier</th>
+<th class="tableblock halign-left valign-top">Corresponding member</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>final</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can&#8217;t be overridden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by default for class members</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>open</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can be overridden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should be specified explicitly</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>abstract</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be overridden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can be used only in abstract classes; abstract members can&#8217;t have an implementation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>override</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides a member in a superclass or interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overridden member is open by default, if not marked final</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_visibility_modifiers">
+<h2>Visibility modifiers</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:23.0769%">
+<col style="width:30.7692%">
+<col style="width:46.1539%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Modifier</th>
+<th class="tableblock halign-left valign-top">Class member</th>
+<th class="tableblock halign-left valign-top">Top-level declaration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>public</strong> (default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible everywhere</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible everywhere</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>internal</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible in a module</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible in a module</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>protected</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible in subclasses</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>private</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible in a class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Visible in a file</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li class="slide">module = a set of Kotlin files compiled together</li>
+<li class="slide">there is no package-private visibility</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_classes">
+<h2>Classes</h2>
+<div class="listingblock">
+<div class="title">Java</div>
+<div class="content">
+<pre class="prettyprint java language-java"><code>public class Person {
+    private final String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var age: Int)</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_classes_2">
+<h2>Classes</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val p = Person("Jim", 33)
+    println(p.name)
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>Person</code> is a value object</li>
+<li class="slide">classes are <code>public</code> and <code>final</code> by default</li>
+<li class="slide">you call the constructor directly, without the <code>new</code> keyword</li>
+<li class="slide"><code>name</code> and <code>age</code> are <em>properties</em></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_properties">
+<h2>Properties</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var age: Int) {
+    val isAdult: Boolean
+        get() = age &gt;= 18
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val p = Person("Jim", 33)
+    println(p.isAdult) // true
+    p.age = 15
+    println(p.isAdult) // false
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">custom getter</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_properties_2">
+<h2>Properties</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var age: Int) {
+    var jobs = 0
+        set(value) {
+            field = when {
+                value &lt; 0 -&gt; 0
+                value &gt; 3 -&gt; 3
+                else -&gt; value
+            }
+        }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val p = Person("Jim", 33)
+    p.jobs = 1
+    println(p.jobs) // 1
+    p.jobs = -5
+    println(p.jobs) // 0
+    p.jobs = 7
+    println(p.jobs) // 3
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">custom setter</li>
+<li class="slide">use the special identifier <code>field</code> to access the backing field</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_data_classes">
+<h2>Data classes</h2>
+<div class="listingblock">
+<div class="title">Java</div>
+<div class="content">
+<pre class="prettyprint scrollablecontent language-scrollablecontent"><code>public class Person {
+    private final String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age &amp;&amp;
+                Objects.equals(name, person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+
+    public Person copy() {
+        return new Person(name, age);
+    }
+
+    @Override
+    public String toString() {
+        return "Person(name=" + name + ", age=" + age + ")";
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Person(val name: String, var age: Int)</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_data_classes_2">
+<h2>Data classes</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Person(val name: String, var age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val p1 = Person("Jim", 33)
+    val p2 = p1.copy()
+    println(p1)        // Person(name=Jim, age=33)
+    println(p2)        // Person(name=Jim, age=33)
+    println(p1 == p2)  // true
+    println(p1 === p2) // false
+
+    val p3 = p1.copy(age=17)
+    println(p3)        // Person(name=Jim, age=17)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nested_classes">
+<h2>Nested classes</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:50%">
+<col style="width:25%">
+<col style="width:25%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Class A declared within another class B</th>
+<th class="tableblock halign-left valign-top">In Java</th>
+<th class="tableblock halign-left valign-top">In Kotlin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Nested class (doesn&#8217;t store a reference to an outer class)</p></div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>class B {
+  static class A {}
+}</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>class B {
+  class A
+}</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Inner class (stores a reference to an outer class)</p></div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>class B {
+  class A {}
+}</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>class B {
+  inner class A
+}</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="nested class" src="./images/nested-class.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_sealed_classes">
+<h2>Sealed classes</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>sealed class Alert
+class Email(val recipient: String, val title: String, val body: String) : Alert()
+class SMS(val cc: Int, val ndc: Int, val sn: Int, val message: String) : Alert()
+
+fun getAckMessage(alert: Alert) =
+    when(alert) {
+        is Email -&gt; "Email with title '${alert.title}' sent to ${alert.recipient}: ${alert.body}"
+        is SMS -&gt; "SMS sent to ++(${alert.cc})${alert.ndc}-${alert.sn}: ${alert.message}"
+    }
+
+
+fun main(args: Array&lt;String&gt;) {
+    println(getAckMessage(Email("nobody@nowhere.net", "Epic fail", "Your server exploded")))
+        // Email with title 'Epic fail' sent to nobody@nowhere.net: Your server exploded
+
+    println(getAckMessage(SMS(49, 171, 47110815, "Godzilla is back in town")))
+        // SMS sent to ++(49)171-47110815: Godzilla is back in town
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">use sealed classes to represent constrained hierarchies in which an object can only be of one of the given types</li>
+<li class="slide">the subclasses of a sealed class must be declared in the same file as the sealed class itself</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_constructors">
+<h2>Constructors</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>open class User(val nickname: String)                // primary constructor</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>class TwitterUser(nickname: String) : User(nickname) // calling parent's primary constructor</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>open class Button                                    // a default constructor is generated</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>class RadioButton: Button()                          // calling parent's default constructor</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>class MenuItem(val name: String,
+               var enabled: Boolean=true,
+               var checked: Boolean=false)           // constructor with default arguments</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>class Secretive private constructor()                // private primary constructor</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>class Point(val x: Int, val y: Int)
+
+class Rectangle(val x1: Int, val y1: Int, val x2: Int, val y2: Int) { // primary constructor
+    constructor(p1: Point, p2: Point): this(p1.x, p1.y, p2.x, p2.y)   // secondary constructor
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_constructors_2">
+<h2>Constructors</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Point(val x: Int, val y: Int)
+
+class Rectangle {                       // no primary constructor
+    val x1: Int
+    val y1: Int
+    val x2: Int
+    val y2: Int
+    constructor(p1: Point, p2: Point) { // secondary constructor
+        x1 = p1.x
+        y1 = p1.y
+        x2 = p2.x
+        y2 = p2.y
+    }
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_constructors_3">
+<h2>Constructors</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Point(val x: Int, val y: Int)
+
+class Rectangle(p1: Point, p2: Point) { // primary constructor
+    val x1: Int
+    val y1: Int
+    val x2: Int
+    val y2: Int
+    init {                              // initializer block
+        x1 = p1.x
+        y1 = p1.y
+        x2 = p2.x
+        y2 = p2.y
+    }
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_objects">
+<h2>Objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class MyLogger {
+    val context = mutableMapOf&lt;String,String&gt;()
+    fun log(message: String) {
+        println("$context: $message")
+    }
+}
+
+val Logger = MyLogger()
+
+fun main(args: Array&lt;String&gt;) {
+    Logger.context["thread"] = "worker-7"
+    Logger.context["txID"] = "dead-b055-1234"
+    Logger.log("Account successfully deleted")
+    // Output: {thread=worker-7, txID=dead-b055-1234}: Account successfully deleted
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">there is no <code>static</code> keyword in Kotlin</li>
+<li class="slide"><code>Logger</code> is a top-level property</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_objects_2">
+<h2>Objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>object Logger {
+    val context = mutableMapOf&lt;String,String&gt;()
+    fun log(message: String) {
+        println("$context: $message")
+    }
+}
+
+
+
+fun main(args: Array&lt;String&gt;) {
+    Logger.context["thread"] = "worker-7"
+    Logger.context["txID"] = "dead-b055-1234"
+    Logger.log("Account successfully deleted")
+    // Output: {thread=worker-7, txID=dead-b055-1234}: Account successfully deleted
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>object</code> provides support for creating singletons</li>
+<li class="slide">it combines a class declaration and a declaration of a single instance of that class</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_objects_3">
+<h2>Objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Person(val name: String) {
+    object NameComparator : Comparator&lt;Person&gt; {
+        override fun compare(p1: Person, p2: Person) = p1.name.compareTo(p2.name)
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val persons = listOf(Person("Bob"), Person("Alice"))
+    println(persons.sortedWith(Person.NameComparator))
+    // Output: [Person(name=Alice), Person(name=Bob)]
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>object</code> can appear inside classes</li>
+<li class="slide"><code>object</code> declarations can inherit from classes and interfaces</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_companion_objects">
+<h2>Companion objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+data class Point (val x: Double, val y: Double)
+
+fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+
+
+
+
+fun main(args: Array&lt;String&gt;) {
+    println(Point(3.0, 4.0))
+    println(fromPolar(5.0, PI / 3))
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>fromPolar</code> should belong to <code>Point</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_companion_objects_2">
+<h2>Companion objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+data class Point private constructor(val x: Double, val y: Double) {
+    object Factory {
+        fun fromCartesian(x: Double, y: Double) = Point(x, y)
+        fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    println(Point.Factory.fromCartesian(3.0, 4.0))
+    println(Point.Factory.fromPolar(5.0, PI / 3))
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">how can we get rid of the object name (<code>Factory</code>)?</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_companion_objects_3">
+<h2>Companion objects</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+data class Point private constructor(val x: Double, val y: Double) {
+    companion object {
+        fun fromCartesian(x: Double, y: Double) = Point(x, y)
+        fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    println(Point.fromCartesian(3.0, 4.0))
+    println(Point.fromPolar(5.0, PI / 3))
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">only one <code>companion</code> object per class</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_exceptions">
+<h2>Exceptions</h2>
+<div class="ulist">
+<ul>
+<li class="slide">Kotlin doesn&#8217;t differentiate between checked and unchecked exceptions</li>
+<li class="slide">you don&#8217;t specify the exceptions thrown by a function</li>
+<li class="slide">you can use throw as an expression</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>fun getEmailUser(email: String): String {
+    val user =
+            if(email.contains('@'))
+                email.substringBefore('@')
+            else
+                throw IllegalArgumentException()
+    return user.toLowerCase()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    println(getEmailUser("John.Smith@example.org")) // john.smith
+    println(getEmailUser("I have no email"))        // throws IllegalArgumentException
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_exceptions_2">
+<h2>Exceptions</h2>
+<div class="ulist">
+<ul>
+<li>you can use try as an expression</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun getEmailUser(email: String): String {
+    val user = if(email.contains('@')) email.substringBefore('@')
+               else throw IllegalArgumentException()
+    return user.toLowerCase()
+}
+
+fun printEmailUser(email: String) {
+    val user = try {
+        getEmailUser(email)
+    } catch(e: Exception) {
+        return
+    }
+    println(user)
+}
+
+fun main(args: Array&lt;String&gt;) {
+    printEmailUser("John.Smith@example.org")        // john.smith
+    printEmailUser("I have no email")               // nothing is printed
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_exceptions_3">
+<h2>Exceptions</h2>
+<div class="ulist">
+<ul>
+<li>you can use try as an expression</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun getEmailUser(email: String): String {
+    val user = if(email.contains('@')) email.substringBefore('@')
+               else throw IllegalArgumentException()
+    return user.toLowerCase()
+}
+
+fun printEmailUser(email: String) {
+    val user = try {
+        getEmailUser(email)
+    } catch(e: Exception) {
+        "unknown"
+    }
+    println(user)
+}
+
+fun main(args: Array&lt;String&gt;) {
+    printEmailUser("John.Smith@example.org")        // john.smith
+    printEmailUser("I have no email")               // unknown
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nullability">
+<h2>Nullability</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>fun strLen(s: String): Int = s.length
+
+fun main(args: Array&lt;String&gt;) {
+    println(strLen("Hello"))  // 5
+//    println(strLen(null))   // compile error: Null can not be a value of a non-null type String
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>// fun strLenSafe(s: String?): Int = s.length // compile error: Only safe (?.) or
+//             non-null asserted (!!.) calls are allowed on a nullable receiver of type String?</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>fun strLenSafe(s: String?): Int = if(s != null) s.length else 0
+
+fun main(args: Array&lt;String&gt;) {
+    println(strLenSafe("Hello"))  // 5
+    println(strLenSafe(null))     // 0
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nullability_safe_call_operator">
+<h2>Nullability - safe call operator</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Address(val streetAddress: String, val zipCode: Int, val city: String, val country: String)
+
+class Company(val name: String, val address: Address?)
+
+class Person(val name: String, val company: Company?)
+
+fun Person.countryName() = this.company?.address?.country ?: "Unknown"
+
+fun main(args: Array&lt;String&gt;) {
+    val michael = Person("Michael", Company("SCOOP",
+            Address("Eiler Straße 3P", 51107, "Köln", "Germany")))
+    val dilbert = Person("Dilbert", null)
+    println(michael.countryName())  // Germany
+    println(dilbert.countryName())  // Unknown
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nullability_not_null_assertion">
+<h2>Nullability - not-null assertion</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Address(val streetAddress: String, val zipCode: Int, val city: String, val country: String)
+
+class Company(val name: String, val address: Address?)
+
+class Person(val name: String, val company: Company?)
+
+fun Person.countryName() = this.company!!.address!!.country  // unsafe
+
+fun main(args: Array&lt;String&gt;) {
+    val michael = Person("Michael", Company("SCOOP",
+            Address("Eiler Straße 3P", 51107, "Köln", "Germany")))
+    val dilbert = Person("Dilbert", null)
+    println(michael.countryName())  // Germany
+    println(dilbert.countryName())  // throws KotlinNullPointerException
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nullability_extensions_for_nullable_types">
+<h2>Nullability - extensions for nullable types</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Address(val streetAddress: String, val zipCode: Int, val city: String, val country: String)
+class Company(val name: String, val address: Address?)
+class Person(val name: String, val company: Company?)
+
+fun Person?.hasEmployer() = (this != null) &amp;&amp; (this.company != null)
+
+fun checkEmployment(p: Person?) {
+    println(if(p.hasEmployer()) "employed" else "unemployed")
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val michael = Person("Michael", Company("SCOOP",
+            Address("Eiler Straße 3P", 51107, "Köln", "Germany")))
+    val dilbert = Person("Dilbert", null)
+    checkEmployment(michael)  // employed
+    checkEmployment(dilbert)  // unemployed
+    checkEmployment(null)     // unemployed
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_nullability_safe_cast_operator">
+<h2>Nullability - safe cast operator</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val firstName: String, val lastName: String) {
+    override fun equals(o: Any?): Boolean {
+        val otherPerson = o as? Person ?: return false
+        return otherPerson.firstName == firstName &amp;&amp;
+                otherPerson.lastName == lastName
+    }
+
+    override fun hashCode(): Int =
+            firstName.hashCode() * 37 + lastName.hashCode()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val p1 = Person("John", "Smith")
+    val p2 = Person("John", "Smith")
+
+    println(p1.equals(p2)) // true
+    println(p1.equals(42)) // false
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_platform_types">
+<h2>Platform types</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>// Java
+public class User {
+    private final String id;
+    private String email;
+
+    public User(String id) { this.id = java.util.Objects.requireNonNull(id); }
+
+    public String getId() { return id; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>// Kotlin
+fun main(args: Array&lt;String&gt;) {
+    val u = User("jsmith")
+    println(u.id?.toUpperCase())    // JSMITH
+    println(u.email?.toUpperCase()) // null
+
+    println(u.id.toUpperCase())    // JSMITH
+    println(u.email.toUpperCase()) // java.lang.IllegalStateException: u.email must not be null
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_platform_types_2">
+<h2>Platform types</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint diffuse language-diffuse"><code>// Java
+public class User {
+    private final String id;
+    private String email;
+
+    public User(String id) { this.id = java.util.Objects.requireNonNull(id); }
+
+    public String getId() { return id; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>// Kotlin
+class UpperUser(id: String): User(id) {
+    override fun getId(): String = super.getId().toUpperCase()
+
+    override fun getEmail(): String? = super.getEmail()?.toUpperCase()
+    override fun setEmail(email: String?) {
+        super.setEmail(email?.toUpperCase())
+    }
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_primitive_and_other_basic_types">
+<h2>Primitive and other basic types</h2>
+<div class="ulist">
+<ul>
+<li class="slide">Kotlin doesn&#8217;t distinguish between primitive types and wrapper types</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>val i: Int = 1
+val list: List&lt;Int&gt; = listOf(1, 2, 3)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">at runtime, the number types are represented in the most efficient way possible</li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><p>
+Kotlin types that correspond to Java primitive types:<div class="ulist">
+<ul>
+<li>Integer types: <code>Byte</code>, <code>Short</code>, <code>Int</code>, <code>Long</code></li>
+<li>Floating-point number types: <code>Float</code>, <code>Double</code></li>
+<li>Character type: <code>Char</code></li>
+<li>Boolean type: <code>Boolean</code></li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_primitive_and_other_basic_types_2">
+<h2>Primitive and other basic types</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:10%">
+<col style="width:10%">
+<col style="width:30%">
+<col style="width:50%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Kotlin</th>
+<th class="tableblock halign-left valign-top">Java</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+<th class="tableblock halign-left valign-top">Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Any</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the supertype of all non-nullable types in Kotlin</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>val answer: Any = 42</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Unit</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Void</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">can be also used as a type argument</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>interface Processor&lt;T&gt; { fun process(): T }
+class NoResultProcessor : Processor&lt;Unit&gt; {
+    override fun process() { /* do stuff */ }
+}</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Nothing</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">used as return type for functions that never complete successfully</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint noborders language-noborders"><code>fun fail(message: String): Nothing {
+    throw Exception(message)
+}
+...
+val addr = user.address ?: fail("No address")
+println(addr.city)</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_class_delegation">
+<h2>Class delegation</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import java.sql.Connection
+import java.sql.ResultSet
+
+interface QueryExecutor {
+    fun execute(sql: String): ResultSet
+}
+
+class QueryExecutorImpl(val connectionProvider: () -&gt; Connection): QueryExecutor {
+    override fun execute(sql: String): ResultSet =
+            connectionProvider().createStatement().executeQuery(sql)
+}
+
+
+
+
+
+
+
+
+// Change request: the returned ResultSet should mask the values from password-containing columns</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_class_delegation_2">
+<h2>Class delegation</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import java.sql.Connection
+import java.sql.ResultSet
+
+interface QueryExecutor {
+    fun execute(sql: String): ResultSet
+}
+
+class QueryExecutorImpl(val connectionProvider: () -&gt; Connection): QueryExecutor {
+    override fun execute(sql: String): ResultSet =
+            SafeResultSet(connectionProvider().createStatement().executeQuery(sql))
+}
+
+class SafeResultSet(val rs: ResultSet) : ResultSet by rs {
+    override fun getString(columnLabel: String?): String =
+            if(columnLabel!!.toLowerCase().contains("password")) "***"
+            else rs.getString(columnLabel)
+
+    override fun getString(columnIndex: Int): String =
+            getString(rs.metaData.getColumnLabel(columnIndex))
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_property_delegation">
+<h2>Property delegation</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>object CountryTable : IntIdTable() {
+    val name = varchar("name", 250).uniqueIndex()
+    val iso = varchar("iso", 2).uniqueIndex()
+}
+
+class Country(id: EntityID&lt;Int&gt;) : IntEntity(id) {
+    companion object : IntEntityClass&lt;Country&gt;(CountryTable)
+    var name: String by CountryTable.name
+    var iso: String by CountryTable.iso
+}
+
+fun main(args: Array&lt;String&gt;) {
+    Database.connect("jdbc:h2:mem:test", driver = "org.h2.Driver")
+    transaction {
+        logger.addLogger(StdOutSqlLogger)
+        create (CountryTable)
+        Country.new { name = "Germany"; iso = "de" }
+        Country.new { name = "Russia"; iso = "ru" }
+        Country.new { name = "United States"; iso = "us" }
+        val russia = Country.find { CountryTable.iso.eq("ru") }.first()
+        println(russia.name)    // Russia
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>using the <a href="https://github.com/jetbrains/exposed">Exposed framework</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lazy_initialization">
+<h2>Lazy initialization</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Email {/* ... */}
+
+fun loadEmails(person: Person): List&lt;Email&gt; {
+    println("Load emails for ${person.name}")
+    return listOf(/*...*/)
+}
+
+class Person(val name: String /* ... */) {
+
+    val emails: List&lt;Email&gt; = loadEmails(this)
+}
+
+
+
+
+
+
+
+// emails will be loaded even if they are not required</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_lazy_initialization_2">
+<h2>Lazy initialization</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Email {/* ... */}
+
+fun loadEmails(person: Person): List&lt;Email&gt; {
+    println("Load emails for ${person.name}")
+    return listOf(/*...*/)
+}
+
+class Person(val name: String /* ... */) {
+    private var nullableEmails: List&lt;Email&gt;? = null
+    val emails: List&lt;Email&gt;
+        get() {
+            if (nullableEmails == null) {
+                nullableEmails = loadEmails(this)
+            }
+            return nullableEmails!!
+        }
+}
+
+// not thread-safe</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_lazy_initialization_3">
+<h2>Lazy initialization</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Email {/* ... */}
+
+fun loadEmails(person: Person): List&lt;Email&gt; {
+    println("Load emails for ${person.name}")
+    return listOf(/*...*/)
+}
+
+class Person(val name: String /* ... */) {
+
+    val emails by lazy { loadEmails(this) }
+}
+
+
+
+
+
+
+
+// lazy is a special case of property delegation</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_collections">
+<h2>Collections</h2>
+<div class="ulist">
+<ul>
+<li>Kotlin builds on the Java collections library</li>
+<li>new features are added through extension functions</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>fun readNumbers(reader: BufferedReader): List&lt;Int?&gt; {
+    val result = ArrayList&lt;Int?&gt;()
+    for (line in reader.lineSequence()) {
+        result.add(line.toIntOrNull())
+    }
+    return result
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>fun addValidNumbers(numbers: List&lt;Int?&gt;) {
+    val validNumbers = numbers.filterNotNull()
+    println("Sum of valid numbers: ${validNumbers.sum()}")
+    println("Invalid numbers: ${numbers.size - validNumbers.size}")
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_collections_2">
+<h2>Collections</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:16.6666%">
+<col style="width:83.3334%">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="list 1 1" src="./images/list-1-1.png">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint java noborders language-java noborders"><code>List&lt;Int&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;<br>
+(List of <code>Int</code>s)</p></div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="list 1 0" src="./images/list-1-0.png">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint java noborders language-java noborders"><code>List&lt;Int?&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;<br>
+(List of nullable <code>Int</code>s)</p></div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="list 0 1" src="./images/list-0-1.png">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint java noborders language-java noborders"><code>List&lt;Int&gt;?</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;<br>
+(Nullable list of <code>Int</code>s)</p></div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="list 0 0" src="./images/list-0-0.png">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="prettyprint java noborders language-java noborders"><code>List&lt;Int?&gt;?</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;<br>
+(Nullable list of nullable <code>Int</code>s)</p></div></div></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_collections_3">
+<h2>Collections</h2>
+<div class="ulist">
+<ul>
+<li>Kotlin separates interfaces for accessing the data in a collection and for modifying the data</li>
+<li>every Java collection interface has a read-only and a mutable representation in Kotlin</li>
+</ul>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="collections" src="./images/collections.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_collections_4">
+<h2>Collections</h2>
+<div class="paragraph"><p>Collection-creation functions</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:26.6666%">
+<col style="width:20%">
+<col style="width:53.3334%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Collection type</th>
+<th class="tableblock halign-left valign-top">Read-only</th>
+<th class="tableblock halign-left valign-top">Mutable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>List</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">listOf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mutableListOf, arrayListOf</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Set</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">setOf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Map</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mapOf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mutableMapOf, hashMapOf, linkedMapOf, sortedMapOf</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>&nbsp;<br></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint slide language-slide"><code>fun main(args: Array&lt;String&gt;) {
+    val mlist = mutableListOf(3, 6, 7)
+    mlist[0] = 1
+    println(mlist)                        // [1, 6, 7]
+
+    val list = listOf(3, 6, 7)
+//    list[0] = 1                         // doesn't compile
+    println(list.filter { it % 2 == 1 })  // [3, 7]
+
+    val map = mutableMapOf(1 to "Alice", 2 to "Bob")
+    println(map[1]?.toUpperCase())        // ALICE
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_arrays">
+<h2>Arrays</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val numbers = arrayOf(1, 2, 3, 4, 5)
+println(numbers.toList())                     // [1, 2, 3, 4, 5]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val nulls = arrayOfNulls&lt;Int&gt;(4)
+println(nulls.joinToString())                 // null, null, null, null</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val bytes = byteArrayOf(83, 99, 111, 111, 112)
+println(String(bytes))                        // Scoop</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val squares = IntArray(5) { i -&gt; (i+1) * (i+1) }
+println(squares.joinToString())               // 1, 4, 9, 16, 25</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val letters = Array&lt;String&gt;(26) { i -&gt; ('a' + i).toString() }
+println(letters.joinToString(""))             // abcdefghijklmnopqrstuvwxyz</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java slide language-java slide"><code>val names = arrayOf("Alice", "Bob", "Carol")
+names.forEachIndexed { index, name -&gt;         // 1: Alice
+    println("${index+1}: $name")              // 2: Bob
+}                                             // 3: Carol</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_vararg_spread">
+<h2>vararg &amp; spread</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun max(vararg numbers: Int) =
+        numbers.reduce{max, e -&gt; if(max &gt; e) max else e}
+...
+...
+...
+    println(max(5, 3, 7, 2))                     // 7
+    val values = intArrayOf(6, 9, 1, 8)
+    println(max(5, 3, *values, 7, 2))            // 9
+
+    val strings = listOf("a", "b", "c")
+    println("%s/%s/%s".format(*strings.toTypedArray())) // a/b/c</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var spouse: Person? = null) {
+    fun marry(p: Person) {
+        spouse = p
+        p.spouse = this
+        println("$name is now married to ${p.name}")
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val john = Person("John")
+    val anna = Person("Anna")
+    john.marry(anna)  // John is now married to Anna
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_2">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, var spouse: Person? = null) {
+    infix fun marry(p: Person) {
+        spouse = p
+        p.spouse = this
+        println("$name is now married to ${p.name}")
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val john = Person("John")
+    val anna = Person("Anna")
+    john marry anna   // John is now married to Anna
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_3">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_4">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]
+println(s1 union s2)    // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_5">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]
+println(s1 union s2)    // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>for(i in 1 until 10 step 2) print("$i ")   // 1 3 5 7 9</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_6">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]
+println(s1 union s2)    // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>for(i in 1 until 10 step 2) print("$i ")   // 1 3 5 7 9
+for(i in 1.until(10).step(2)) print("$i ") // 1 3 5 7 9</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_7">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]
+println(s1 union s2)    // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>for(i in 1 until 10 step 2) print("$i ")   // 1 3 5 7 9
+for(i in 1.until(10).step(2)) print("$i ") // 1 3 5 7 9</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>println(mapOf(1 to "Alice", 2 to "Bob"))   // {1=Alice, 2=Bob}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_infix_calls_8">
+<h2>Infix calls</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val s1 = setOf("aaa", "bbb")
+val s2 = setOf("bbb", "ccc")
+println(s1.union(s2))   // [aaa, bbb, ccc]
+println(s1 union s2)    // [aaa, bbb, ccc]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>for(i in 1 until 10 step 2) print("$i ")   // 1 3 5 7 9
+for(i in 1.until(10).step(2)) print("$i ") // 1 3 5 7 9</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>println(mapOf(1 to "Alice", 2 to "Bob"))   // {1=Alice, 2=Bob}
+println(mapOf(1.to("Alice"), 2.to("Bob"))) // {1=Alice, 2=Bob}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+data class Point(val x: Double, val y: Double)
+
+
+
+fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+
+fun main(args: Array&lt;String&gt;) {
+    val p1 = fromPolar(4.0, PI / 5)
+    val p2 = fromPolar(3.0, 7 * PI / 10)
+    val dx = p2.x - p1.x
+    val dy = p2.y - p1.y
+    val d = sqrt(dx * dx + dy * dy)
+    println("distance = $d")  // distance = 5.0
+}</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;</p></div>
+</section>
+<section class="slide" id="_destructuring_2">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+data class Point(val x: Double, val y: Double)
+
+
+
+fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+
+fun main(args: Array&lt;String&gt;) {
+    val (x1, y1) = fromPolar(4.0, PI / 5)
+    val (x2, y2) = fromPolar(3.0, 7 * PI / 10)
+    val dx = x2 - x1
+    val dy = y2 - y1
+    val d = sqrt(dx * dx + dy * dy)
+    println("distance = $d")  // distance = 5.0
+}</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Data classes can be destructured directly.</p></div>
+</section>
+<section class="slide" id="_destructuring_3">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>import kotlin.math.*
+
+class Point(val x: Double, val y: Double) {
+    operator fun component1() = x
+    operator fun component2() = y
+}
+fun fromPolar(r: Double, phi: Double) = Point(r * cos(phi), r * sin(phi))
+
+fun main(args: Array&lt;String&gt;) {
+    val (x1, y1) = fromPolar(4.0, PI / 5)
+    val (x2, y2) = fromPolar(3.0, 7 * PI / 10)
+    val dx = x2 - x1
+    val dy = y2 - y1
+    val d = sqrt(dx * dx + dy * dy)
+    println("distance = $d")  // distance = 5.0
+}</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Non-data classes must implement <code>componentN()</code>.</p></div>
+</section>
+<section class="slide" id="_destructuring_4">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun printEntries(map: Map&lt;String, String&gt;) {
+    for ((key, value) in map) {
+        println("$key -&gt; $value")
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    printEntries(mapOf(
+            "040" to "Hamburg",
+            "0221" to "Köln",
+            "0611" to "Wiesbaden"
+    ))
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Output</div>
+<div class="content">
+<pre><code>040 -&gt; Hamburg
+0221 -&gt; Köln
+0611 -&gt; Wiesbaden</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_5">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun printWithIndex(list: List&lt;*&gt;) {
+    for ((index, element) in list.withIndex()) {
+        println("$index: $element")
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    printWithIndex(listOf("Zero", "One", "Two"))
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Output</div>
+<div class="content">
+<pre><code>0: Zero
+1: One
+2: Two</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_6">
+<h2>Destructuring</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun splitFilename(fullName: String) {
+    val (name, extension) = fullName.split('.', limit = 2)
+    println("name: $name, extension: $extension")
+}
+
+fun main(args: Array&lt;String&gt;) {
+    splitFilename("scoop.kt")
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Output</div>
+<div class="content">
+<pre><code>name: scoop, extension: kt</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection">
+<h2>Variance, type projection</h2>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="variance1" src="./images/variance1.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_2">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;T: Animal&gt;(val list: List&lt;T&gt;) {
+    fun get(name: String): T = list.first{it.name == name}
+}
+
+fun feedByName(name: String, herd: Herd&lt;Animal&gt;) {
+    herd.get(name).feed()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd(listOf(Animal("Unicorn"), Animal("Godzilla")))
+    val cats = Herd(listOf(Cat("Nala"), Cat("Sammy", "orange")))
+
+    feedByName("Godzilla", animals)
+//    feedByName("Sammy", cats)        // compile error: Type mismatch
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_3">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;T: Animal&gt;(val list: List&lt;T&gt;) {
+    fun get(name: String): T = list.first{it.name == name}
+}
+
+fun feedByName(name: String, herd: Herd&lt;out Animal&gt;) {     // use-site variance
+    herd.get(name).feed()                                  // Java: &lt;? extends Animal&gt;
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd(listOf(Animal("Unicorn"), Animal("Godzilla")))
+    val cats = Herd(listOf(Cat("Nala"), Cat("Sammy", "orange")))
+
+    feedByName("Godzilla", animals)
+    feedByName("Sammy", cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_4">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;out T: Animal&gt;(val list: List&lt;T&gt;) {           // declaration-site variance
+    fun get(name: String): T = list.first{it.name == name}
+}
+
+fun feedByName(name: String, herd: Herd&lt;Animal&gt;) {
+    herd.get(name).feed()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd(listOf(Animal("Unicorn"), Animal("Godzilla")))
+    val cats = Herd(listOf(Cat("Nala"), Cat("Sammy", "orange")))
+
+    feedByName("Godzilla", animals)
+    feedByName("Sammy", cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_5">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;T: Animal&gt;(val list: MutableList&lt;T&gt;) {
+    fun accept(member: T) = list.add(member)
+}
+
+fun addGarfield(herd: Herd&lt;Cat&gt;) {
+    herd.accept(Cat("Garfield", "orange"))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd&lt;Animal&gt;(mutableListOf())
+    val cats = Herd&lt;Cat&gt;(mutableListOf())
+
+//    addGarfield(animals)    // compile error: Type mismatch
+    addGarfield(cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_6">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;T: Animal&gt;(val list: MutableList&lt;T&gt;) {
+    fun accept(member: T) = list.add(member)
+}
+
+fun addGarfield(herd: Herd&lt;in Cat&gt;) {  // use-site variance (Java: &lt;? super Cat&gt;)
+    herd.accept(Cat("Garfield", "orange"))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd&lt;Animal&gt;(mutableListOf())
+    val cats = Herd&lt;Cat&gt;(mutableListOf())
+
+    addGarfield(animals)
+    addGarfield(cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_7">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) {
+    fun feed() = println("$name is no longer hungry")
+}
+
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+class Herd&lt;in T: Animal&gt;(val list: MutableList&lt;in T&gt;) { // declaration-site variance
+    fun accept(member: T) = list.add(member)
+}
+
+fun addGarfield(herd: Herd&lt;Cat&gt;) {
+    herd.accept(Cat("Garfield", "orange"))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd&lt;Animal&gt;(mutableListOf())
+    val cats = Herd&lt;Cat&gt;(mutableListOf())
+
+    addGarfield(animals)
+    addGarfield(cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_8">
+<h2>Variance, type projection</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>open class Animal(val name: String) { fun feed() = println("$name is no longer hungry") }
+class Cat(name: String, var hairColor: String? = null): Animal(name)
+
+interface Producer&lt;out T&gt; { fun get(name: String): T }
+interface Consumer&lt;in T&gt; { fun accept(member: T) }
+class Herd&lt;T: Animal&gt;(val list: MutableList&lt;T&gt;): Producer&lt;T&gt;, Consumer&lt;T&gt; {
+    override fun accept(member: T) { list.add(member) }
+    override fun get(name: String): T = list.first{it.name == name}
+}
+
+fun feedByName(name: String, herd: Producer&lt;Animal&gt;) {
+    herd.get(name).feed()
+}
+fun addGarfield(herd: Consumer&lt;Cat&gt;) {
+    herd.accept(Cat("Garfield", "orange"))
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val animals = Herd&lt;Animal&gt;(mutableListOf(Animal("Unicorn"), Animal("Godzilla")))
+    val cats = Herd&lt;Cat&gt;(mutableListOf(Cat("Nala"), Cat("Sammy", "orange")))
+
+    feedByName("Godzilla", animals)
+    feedByName("Sammy", cats)
+
+    addGarfield(animals)
+    addGarfield(cats)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_variance_type_projection_9">
+<h2>Variance, type projection</h2>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="variance2" src="./images/variance2.png">
+</div>
+</div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:13.8888%">
+<col style="width:18.0555%">
+<col style="width:12.9629%">
+<col style="width:55.0928%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Example</th>
+<th class="tableblock halign-left valign-top">Variance</th>
+<th class="tableblock halign-left valign-top">Restriction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Out-Projected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Producer&lt;out Cat&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Covariance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type parameter cannot be used as a function argument or setter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In-Projected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Consumer&lt;in Cat&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contravariance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the type parameter is returned from a function or getter, its type will be Any? (or the upper-bound if you specified a type parameter constraint)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Star&#8209;Projected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MutableList&lt;*&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Every instance is a subtype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Both of the above restrictions apply</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_lambdas">
+<h2>Lambdas</h2>
+<div class="imageblock thumb">
+<div class="content">
+<img alt="lambdas" src="./images/lambdas.png">
+</div>
+</div>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>val sum = { x: Int, y: Int -&gt; x + y }
+println(sum(1, 2))  // 3</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>you can store a lambda expression in a variable</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_2">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 29), Person("Bob", 31))
+    println(people.joinToString(" ", transform = { p: Person -&gt; p.name })) // Alice Bob
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>positional argument: <code>separator</code></li>
+<li>named argument: <code>transform</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_3">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 29), Person("Bob", 31))
+    println(people.joinToString(" ") { p: Person -&gt; p.name })              // Alice Bob
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>the lambda expression can be moved out of the parentheses</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_4">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 29), Person("Bob", 31))
+    println(people.joinToString(" ") { p -&gt; p.name })                      // Alice Bob
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>the compiler can infer the parameter type</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_5">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 29), Person("Bob", 31))
+    println(people.joinToString(" ") { it.name })                          // Alice Bob
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>you can use the default parameter name <code>it</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_6">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 29), Person("Bob", 31))
+    println(people.joinToString(" ", transform = Person::name))            // Alice Bob
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>you can replace the lambda expression with a member reference</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_7">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun printProblemCounts(responses: Collection&lt;String&gt;) {
+    var clientErrors = 0
+    var serverErrors = 0
+    responses.forEach {
+        if (it.startsWith("4")) {
+            clientErrors++
+        } else if (it.startsWith("5")) {
+            serverErrors++
+        }
+    }
+    println("$clientErrors client errors, $serverErrors server errors")
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val responses = listOf("200 OK", "418 I'm a teapot", "500 Internal Server Error")
+    printProblemCounts(responses)    // 1 client errors, 1 server errors
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>you aren&#8217;t restricted to accessing final variables</li>
+<li>you can modify variables from within a lambda</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_8">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 31), Person("Bob", 29), Person("Carol", 31))
+
+    val ageGroups = people.groupBy { it.age }
+    println(ageGroups)
+// {31=[Person(name=Alice, age=31), Person(name=Carol, age=31)], 29=[Person(name=Bob, age=29)]}
+
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_lambdas_9">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Person(val name: String, val age: Int)
+
+fun main(args: Array&lt;String&gt;) {
+    val people = listOf(Person("Alice", 31), Person("Bob", 29), Person("Carol", 31))
+
+    val ageGroups = people.groupBy { it.age }
+    println(ageGroups)
+// {31=[Person(name=Alice, age=31), Person(name=Carol, age=31)], 29=[Person(name=Bob, age=29)]}
+
+    println(ageGroups.mapValues{(_, list) -&gt; list.map { it.name }})
+// {31=[Alice, Carol], 29=[Bob]}
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_lambdas_10">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun alphabet(): String {
+    val result = StringBuilder()
+    for (letter in 'A'..'Z') {
+        result.append(letter)
+    }
+    result.append("\nNow I know the alphabet!")
+    return result.toString()
+}
+
+fun main(args: Array&lt;String&gt;) {
+    println(alphabet())
+// ABCDEFGHIJKLMNOPQRSTUVWXYZ
+// Now I know the alphabet!
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">how to avoid repeating the result name in each call?</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lambdas_11">
+<h2>Lambdas</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>fun alphabet(): String =
+    with(StringBuilder()) {
+        for (letter in 'A'..'Z') {
+            append(letter)
+        }
+        append("\nNow I know the alphabet!")
+        toString()
+    }
+
+fun main(args: Array&lt;String&gt;) {
+    println(alphabet())
+// ABCDEFGHIJKLMNOPQRSTUVWXYZ
+// Now I know the alphabet!
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide"><code>with</code> is a standard library function that uses <em>lambdas with receivers</em> (see also: <code>let</code>, <code>run</code>, <code>also</code>, <code>apply</code>)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions">
+<h2>Operators and conventions</h2>
+<div class="ulist">
+<ul>
+<li class="slide">Java: language features tied to specific classes (Iterable, AutoCloseable etc.)</li>
+<li class="slide">Kotlin: features are tied to functions with specific names (conventions)</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-none slide" style="width:100%">
+<caption class="title">Overloadable arithmetic operators</caption>
+<colgroup>
+<col style="width:47.619%">
+<col style="width:4.7619%">
+<col style="width:47.6191%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Binary Operators</th>
+<th class="tableblock halign-left valign-top">&nbsp;</th>
+<th class="tableblock halign-left valign-top">Unary operators</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:50%">
+<col style="width:50%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Function name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a * b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">times</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a / b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">div</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a % b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mod</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a + b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">plus</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a - b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minus</p></td>
+</tr>
+</tbody>
+</table></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+<td class="tableblock halign-left valign-top"><div><table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:50%">
+<col style="width:50%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Function name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unaryPlus</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unaryMinus</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">!a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&plus;+a, a++</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inc</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--a, a--</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dec</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_operators_and_conventions_arithmetic_operators">
+<h2>Operators and conventions: arithmetic operators</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Point(val x: Int, val y: Int) {
+    operator fun plus(other: Point): Point {
+        return Point(x + other.x, y + other.y)
+    }
+}
+
+fun main(args: Array&lt;String&gt;) {
+    var p1 = Point(10, 20)
+    val p2 = Point(30, 40)
+    println(p1 + p2)    // Point(x=40, y=60)
+
+    p1 += p2
+    println(p1)         // Point(x=40, y=60)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions_arithmetic_operators_2">
+<h2>Operators and conventions: arithmetic operators</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Point(val x: Int, val y: Int)
+
+operator fun Point.plus(other: Point): Point {
+    return Point(x + other.x, y + other.y)
+}
+
+fun main(args: Array&lt;String&gt;) {
+    var p1 = Point(10, 20)
+    val p2 = Point(30, 40)
+    println(p1 + p2)    // Point(x=40, y=60)
+
+    p1 += p2
+    println(p1)         // Point(x=40, y=60)
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions_comparisons">
+<h2>Operators and conventions: comparisons</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>class Person(val firstName: String, val lastName: String): Comparable&lt;Person&gt; {
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        if (other !is Person) return false
+        return other.firstName == firstName &amp;&amp; other.lastName == lastName
+    }
+
+    override fun compareTo(other: Person): Int =
+        compareValuesBy(this, other, Person::lastName, Person::firstName)
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val p1 = Person("Alice", "Smith")
+    val p2 = Person("Bob", "Johnson")
+    println(p1 == p2)    // false
+    println(p1 != p2)    // true
+    println(p1 &lt; p2)     // false
+    println(p1 &gt;= p2)    // true
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions_indexed_access">
+<h2>Operators and conventions: indexed access</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Point(val x: Int, val y: Int)
+
+operator fun Point.get(index: Int) = when(index) {
+    0 -&gt; x
+    1 -&gt; y
+    else -&gt; throw IndexOutOfBoundsException("Invalid coordinate $index")
+}
+
+
+
+
+
+
+
+fun main(args: Array&lt;String&gt;) {
+    val p = Point(10, 20)
+
+    println(p[1])    // 20
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions_indexed_access_2">
+<h2>Operators and conventions: indexed access</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Point(var x: Int, var y: Int)
+
+operator fun Point.get(index: Int) = when(index) {
+    0 -&gt; x
+    1 -&gt; y
+    else -&gt; throw IndexOutOfBoundsException("Invalid coordinate $index")
+}
+
+operator fun Point.set(index: Int, value: Int) = when(index) {
+    0 -&gt; x = value
+    1 -&gt; y = value
+    else -&gt; throw IndexOutOfBoundsException("Invalid coordinate $index")
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val p = Point(10, 20)
+    p[1] = 42
+    println(p[1])    // 42
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_operators_and_conventions_the_in_operator">
+<h2>Operators and conventions: the <code>in</code> operator</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>data class Point(val x: Int, val y: Int)
+
+data class Rectangle(val upperLeft: Point, val lowerRight: Point)
+
+operator fun Rectangle.contains(p: Point): Boolean {
+    return p.x in upperLeft.x until lowerRight.x &amp;&amp;
+            p.y in upperLeft.y until lowerRight.y
+}
+
+fun main(args: Array&lt;String&gt;) {
+    val rect = Rectangle(Point(10, 20), Point(50, 50))
+    println(Point(20, 30) in rect)   // true
+    println(Point(5, 5) in rect)     // false
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">other convention functions: <code>rangeTo</code> and <code>iterator</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_coroutines">
+<h2>Coroutines</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>suspend fun requestImageUrls(query: String, count: Int = 20) = ...
+suspend fun requestImageData(imageUrl: String) = ...
+
+suspend fun createCollage(query: String, count: Int): BufferedImage {
+    val urls = requestImageUrls(query, count)
+    val images = mutableListOf&lt;BufferedImage&gt;()
+    for (index in 0 until urls.size) {
+        val image = requestImageData(urls[index])
+        images += image
+    }
+    val newImage = combineImages(images)
+    return newImage
+}</code></pre>
+</div>
+</div>
+<div class="paragraph"><p><span class="small">Source: <a class="bare" href="https://github.com/rpreissel/kotlin-coroutine.git">https://github.com/rpreissel/kotlin-coroutine.git</a></span></p></div>
+</section>
+<section class="slide" id="_coroutines_2">
+<h2>Coroutines</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint java language-java"><code>suspend fun requestImageData(imageUrl: String) = suspendCoroutine&lt;BufferedImage&gt; { cont -&gt;
+    JerseyClient.url(imageUrl)
+        .request(MediaType.APPLICATION_OCTET_STREAM)
+        .async()
+        .get(object : InvocationCallback&lt;InputStream&gt; {
+            override fun completed(response: InputStream) {
+                val image = ImageIO.read(response)
+                cont.resume(image)
+            }
+
+            override fun failed(throwable: Throwable) {
+                cont.resumeWithException(throwable)
+            }
+        })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph"><p><span class="small">Source: <a class="bare" href="https://github.com/rpreissel/kotlin-coroutine.git">https://github.com/rpreissel/kotlin-coroutine.git</a></span></p></div>
+</section>
+<section class="slide" id="_other_things">
+<h2>Other things</h2>
+<div class="ulist">
+<ul>
+<li>inline functions</li>
+<li>import aliases / typealias</li>
+<li><p>
+annotations:<div class="ulist">
+<ul>
+<li>annotation targets: property, field, get, set, receiver, param, setparam, delegate, file</li>
+<li>@Volatile, @Strictfp, @JvmName, @JvmStatic, @JvmOverloads, @JvmField</li>
+</ul>
+</div></p></li>
+<li>lateinit</li>
+<li>tail recursion</li>
+<li>reified type parameters</li>
+<li>dokka / kdoc</li>
+<li>converting Java code</li>
+<li>using Java from Kotlin</li>
+<li>using Kotlin from Java</li>
+<li>test frameworks</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_build_gradle_kts_for_generating_these_slides">
+<h2>build.gradle.kts for generating these slides</h2>
+<div class="listingblock">
+<div class="title">&nbsp;./gradlew asciidoctor</div>
+<div class="content">
+<pre class="prettyprint scrollablecontent language-scrollablecontent"><code>import com.github.jrubygradle.JRubyPrepare
+import org.asciidoctor.gradle.AsciidoctorTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.Task
+import org.gradle.jvm.tasks.Jar
+import org.ysb33r.groovy.dsl.vfs.VFS
+
+buildscript {
+    dependencies {
+        classpath("org.ysb33r.gradle:vfs-gradle-plugin:1.0")
+        classpath("commons-httpclient:commons-httpclient:3.1")
+    }
+}
+
+val version: String by project
+val deckjsVersion: String by project
+val asciidoctorBackendVersion: String by project
+val downloadDir = File(buildDir,"download")
+val templateDir = File(downloadDir,"templates")
+val deckjsTmpDir = File(downloadDir,"deck.js.tmp")
+val deckjsDir = File(downloadDir,"deck.js")
+val deckjsVersionDir = File(downloadDir,"deck.js-master")
+
+plugins {
+    application
+    kotlin("jvm") version "1.2.31"
+    id("org.jetbrains.dokka") version "0.9.16"
+    id("org.asciidoctor.convert") version "1.6.0"
+    id("com.github.jruby-gradle.base") version "1.6.0"
+    id("org.openjfx.javafxplugin") version "0.0.7"
+}
+
+repositories {
+    jcenter()
+    maven("https://dl.bintray.com/kotlin/exposed")
+}
+
+apply {
+    plugin("application")
+    plugin("org.jetbrains.dokka")
+    plugin("com.github.jruby-gradle.base")
+    plugin("org.ysb33r.vfs")
+    plugin("org.asciidoctor.convert")
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+tasks.withType&lt;KotlinCompile&gt; {
+    kotlinOptions.jvmTarget = "1.8"
+}
+group = "de.scoopsoftware"
+
+javafx {
+    modules = listOf("javafx.controls", "javafx.fxml")
+}
+
+dependencies {
+    compile(kotlin("reflect"))
+    compile(kotlin("stdlib"))
+    compile("org.slf4j:slf4j-simple:1.7.25")
+    compile("org.jetbrains.exposed:exposed:0.10.1")
+    compile("com.h2database:h2:1.4.197")
+    compile("io.javalin:javalin:1.4.1")
+    compile("no.tornado:tornadofx:1.7.15")
+    testCompile("io.kotlintest:kotlintest:2.0.7")
+    gems("rubygems:haml:5.0.4")
+    jrubyExec("org.jruby:jruby-complete:9.2.6.0")
+}
+
+tasks {
+    register("download") {
+        doLast {
+            mkdir(downloadDir!!)
+            with(VFS()) {
+                cp(mapOf("recursive" to true, "overwrite" to true, "smash" to true),
+                        "zip:https://github.com/asciidoctor/asciidoctor-deck.js/archive/${asciidoctorBackendVersion}.zip!asciidoctor-deck.js-${asciidoctorBackendVersion}/templates",
+                        templateDir)
+                cp(mapOf("recursive" to true, "overwrite" to true, "smash" to true),
+                        "zip:https://github.com/imakewebthings/deck.js/archive/${deckjsVersion}.zip!deck.js-${deckjsVersion}",
+                        deckjsDir)
+            }
+            deckjsVersionDir.renameTo(deckjsDir)
+        }
+    }
+}
+val downloadTask = tasks.get("download")
+val jrubyPrepare = tasks.get("jrubyPrepare")
+
+with(downloadTask) {
+    description = "Download extra deckjs resources"
+    outputs.dirs(templateDir, deckjsDir)
+}
+
+tasks.withType&lt;Jar&gt; {
+    manifest {
+        attributes(mapOf(
+                "Implementation-Title" to "kotlinTalk",
+                "Main-Class" to "de.scoopsoftware.kotlintalk.HelloWeb",
+                "Implementation-Version" to version
+        ))
+    }
+}
+
+tasks.withType&lt;AsciidoctorTask&gt; {
+    dependsOn(jrubyPrepare, downloadTask)
+
+    sources(delegateClosureOf&lt;PatternSet&gt; {
+        include("kotlin-slides.adoc")
+    })
+
+    resources(delegateClosureOf&lt;CopySpec&gt; {
+        from (sourceDir) { include("images/**", "deck.js/**") }
+        from (downloadDir) { include("deck.js/**") }
+    })
+
+    backends("html5")
+
+    attributes.putAll(mapOf(
+            "prjdir" to "${project.rootDir}",
+            "sourcedir" to "${project.rootDir}/src/main",
+            "imagesdir" to "./images"
+    ))
+
+    options(mapOf("template_dirs" to listOf(File(templateDir,"haml").absolutePath)))
+}
+
+application {
+    mainClassName = "de.scoopsoftware.kotlintalk.HelloWeb"
+}
+
+tasks.register("bar") {
+    group = "sample"
+    doLast { println("Bar!") }
+}</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_resources">
+<h2>Resources</h2>
+<table class="tableblock frame-all grid-none" style="width:100%">
+<colgroup>
+<col style="width:33.3333%">
+<col style="width:66.6667%">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock thumb">
+<div class="content">
+<img alt="KotlinInAction" src="./images/KotlinInAction.png">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>Kotlin in Action</li>
+<li><a class="bare" href="https://kotlinlang.org/">https://kotlinlang.org/</a></li>
+<li><a class="bare" href="https://try.kotlinlang.org">https://try.kotlinlang.org</a></li>
+<li><a class="bare" href="https://kotlinconf.com/2017/talks/">https://kotlinconf.com/2017/talks/</a></li>
+<li><a class="bare" href="https://github.com/KotlinBy/awesome-kotlin">https://github.com/KotlinBy/awesome-kotlin</a></li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/scale/deck.scale.js"></script>
+<script src="deck.js/extensions/goto/deck.goto.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>
